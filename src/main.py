@@ -1,4 +1,5 @@
 from readers.csv_reader import load_all_csvs
+from clean import main_clean  
 import pandas as pd
 import os 
 
@@ -17,8 +18,6 @@ files = [
 ]
 
 
-
-
 def main():
     print("--- STARTING E-COMMERCE INGESTION WORKFLOW ---")
     
@@ -27,9 +26,19 @@ def main():
     
     for name, df in datasets.items():
         print(f"\nDataset: {name}")
-        #print(df.head())
-        #print(df.info())
+        print(df.head())
+        print(df.info())
         print(df.columns)
+
+
+    #Apply cleaning functions
+    cleaned_datasets = main_clean(datasets)
+
+    # Print a summary of the cleaned data
+    for name, df in cleaned_datasets.items():
+        print(f"\nCleaned Dataset: {name}")
+        print(df.head())
+        print(df.info())
     
     
     print("--- INGESTION COMPLETE ---")
