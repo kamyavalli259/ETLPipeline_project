@@ -1,9 +1,29 @@
 import pandas as pd
 
-
-
 def clean_dataframe(dataframe):
-    """clean the dataset in the dataframe
+    """
+    Standardize and clean a pandas DataFrame.
+    
+    This function performs the following cleaning operations:
+    - Creates a copy of the original DataFrame.
+    - Standardizes column names by removing leading/trailing whitespace,
+      converting names to lowercase, and replacing spaces with underscores.
+    - Removes leading and trailing whitespace from string values.
+    - Removes duplicate rows.
+    - Replaces common missing-value placeholders
+      ('', 'NA', 'N/A', 'NULL', 'null', 'None') with pandas NA values.
+    
+    Parameters:
+    ----------
+    dataframe : pandas.DataFrame
+        The DataFrame to clean.
+    
+    Returns:
+    -------
+    pandas.DataFrame
+        A cleaned DataFrame with standardized column names,
+        trimmed string values, duplicates removed, and missing
+        values normalized.
     """
     cleaned = dataframe.copy()
     cleaned.columns = cleaned.columns.str.strip().str.lower().str.replace(" ", "_")
@@ -12,7 +32,6 @@ def clean_dataframe(dataframe):
     cleaned = cleaned.drop_duplicates()
     cleaned = cleaned.replace(['', 'NA', 'N/A', 'NULL', 'null', 'None'], pd.NA)
     return cleaned
-
 
 def clean_users(dataframe):
     users_cleaned = clean_dataframe(dataframe)
@@ -23,7 +42,6 @@ def clean_sessions(dataframe):
     sessions_cleaned = clean_dataframe(dataframe)
     sessions_cleaned['start_time'] = pd.to_datetime(sessions_cleaned['start_time'])
     return sessions_cleaned
-
 
 def clean_reviews(dataframe):
     """
@@ -50,9 +68,9 @@ def clean_interactions(dataframe):
     interactions_cleaned['timestamp'] = pd.to_datetime(interactions_cleaned['timestamp'])
     return interactions_cleaned
 
-
 '''
 call all the above functions
+'''
 '''
 def main_clean(dataframes):
     functions = {'users': clean_users, 'sessions': clean_sessions, 'reviews': clean_reviews, 
@@ -61,4 +79,4 @@ def main_clean(dataframes):
     for name in dataframes: 
         cleaned_dataframes[name] = functions[name](dataframes[name])
     return cleaned_dataframes
-    
+'''
