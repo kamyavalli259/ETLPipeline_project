@@ -1,5 +1,6 @@
 import pandas as pd
 from logger import logger
+from database import insert_rejects
 
 def clean_dataframe(dataframe):
     """
@@ -43,15 +44,16 @@ def clean_dataframe(dataframe):
     logger.info(f"Removed {before - after} duplicate rows")
     cleaned = cleaned.replace(['', 'NA', 'N/A', 'NULL', 'null', 'None'], pd.NA)
 
-    logger.info(
-        f"Missing values after cleaning: {cleaned.isnull().sum().sum()}"
-    )
+    
 
     logger.info("Finished generic dataframe cleaning")
 
     return cleaned
 
 def clean_users(dataframe):
+
+    lenght = len(dataframe)
+    logger.info(f"USERS: Number of rows before cleaning {lenght}")
     #logger.info("Cleaning users DataFrame.")
     users_cleaned = clean_dataframe(dataframe)
 
@@ -61,6 +63,8 @@ def clean_users(dataframe):
     logger.info(
         f"Users cleaned successfully. Rows: {len(users_cleaned)}"
     )
+    after = lenght - len(users_cleaned)
+    logger.info(f"USERS: Number of rows after cleaning {after}")
     return users_cleaned
 
 def clean_sessions(dataframe):
@@ -81,11 +85,20 @@ def clean_reviews(dataframe):
     purchase_id has 200 null values
     """
     #logger.info("Cleaning reviews DataFrame.")
+    length = len(dataframe)
+    logger.info(f"Reviews: Number of rows before cleaning {len(dataframe)}")
     reviews_cleaned = clean_dataframe(dataframe)
     logger.debug('Converting review_date to datetime.')
     reviews_cleaned['review_date'] = pd.to_datetime(reviews_cleaned['review_date'])
-    reviews_cleaned = reviews_cleaned.dropna()
+
+    na_rows = reviews_cleaned[reviews_cleaned['purchase_id'].isna()]
+    data_tuples = list(na_rows.itertuples(index=False, name=None))
+    for value in data_tuples:
+        insert_rejects('reviews', value, 'NA value for purchase id')
+    reviews_cleaned = reviews_cleaned.dropna(subset=['purchase_id'])
     logger.info(f"Reviews cleaned succesfully. Rows: {len(reviews_cleaned)}")
+    after = length - len(reviews_cleaned)
+    logger.info(f"Number of rows dropped. Rows: {after}")
     return reviews_cleaned
 
 def clean_purchases(dataframe):

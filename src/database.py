@@ -3,6 +3,7 @@ import pandas as pd
 from dotenv import load_dotenv
 import os
 from logger import logger
+import json
 
 def connect():
     load_dotenv()
@@ -151,22 +152,32 @@ def init_db():
         #ensure the connection is always closed 
         conn.close() 
 
-def insert_rejects(data):
+def insert_rejects(source, payload, reason):
     conn = connect()
-    command = insert_query = """
-                    INSERT INTO stg_rejects(
-                        user_id,
-                        age,
-                        gender,
-                        country,
-                        city,
-                        signup_date,
-                        income_level,
-                        preferred_category,
-                        loyalty_tier
+    try: 
+        with conn:
+            with conn.cursor() as cursor:
+
+                # Define the SQL INSERT statement with placeholders
+                insert_query = """
+                    INSERT INTO stg_rejects (
+                        source_name,
+                        raw_payload,
+                        reason,
+                        rejected_at
           
-                    ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    ) VALUES (%s, %s, %s, CURRENT_TIMESTAMP)
                 """
+                payload = tuple(None if pd.isna(x) else x for x in payload)
+                data = (source, json.dumps(payload, default=str), reason)
+                
+                cursor.execute(insert_query, data) 
+                print("Rows inserted:", cursor.rowcount)
+                
+    except psycopg2.Error as e:
+        logger.error(f"Database error: {e}")
+    finally:
+        conn.close()
 
      
 def insert_users_data(users_cleaned):
@@ -197,19 +208,22 @@ def insert_users_data(users_cleaned):
                 for value in data_tuples:
                     try:
                         cursor.execute(insert_query, value)
-                    except :
+                    except Exception as e:
                         logger.error(
                             f"Failed inserting user {value[0]}: {e}"
                         )
+                        insert_rejects('users', value, str(e))
                 logger.info("Finished inserting users")
+
                 
     except psycopg2.Error as e:
         logger.error(f"Database error: {e}")
+
     finally:
         conn.close()
 
 def insert_products_data(products_cleaned):
-    #logger.info("Inserting products data into database")
+    #logger.info("Inserting products data into databadse")
     conn = connect()
 
     try: 
@@ -226,8 +240,16 @@ def insert_products_data(products_cleaned):
                 """
 
                 data_tuples = list(products_cleaned.itertuples(index=False, name=None))
-                cursor.executemany(insert_query, data_tuples)
-                logger.info(f"Inserted {len(data_tuples)} rows into products")
+                for value in data_tuples:
+                    try:
+                        cursor.execute(insert_query, value)
+                    except :
+                        logger.error(
+                            f"Failed inserting products {value[0]}: {e}"
+                        )
+                        insert_rejects('products', value, str(e))
+                logger.info("Finished inserting products")
+
     except psycopg2.Error as e:
         print(f"An error occurred while inserting products: {e}")
     finally:
@@ -251,10 +273,16 @@ def insert_purchases_data(purchases_cleaned):
                 """
 
                 data_tuples = list(purchases_cleaned.itertuples(index=False, name=None))
-                cursor.executemany(insert_query, data_tuples)
-                logger.info(
-                    f"Inserted {len(data_tuples)} rows into purchases"
-                )
+                for value in data_tuples:
+                    try:
+                        cursor.execute(insert_query, value)
+                    except :
+                        logger.error(
+                            f"Failed inserting purchases {value[0]}: {e}"
+                        )
+                        insert_rejects('purchases', value, str(e))
+                logger.info("Finished inserting purchases")
+
     except psycopg2.Error as e:
         print(f"An error occurred while inserting purchases: {e}")
     finally:
@@ -278,10 +306,16 @@ def insert_reviews_data(reviews_cleaned):
                 """
 
                 data_tuples = list(reviews_cleaned.itertuples(index=False, name=None))
-                cursor.executemany(insert_query, data_tuples)
-                logger.info(
-                    f"Inserted {len(data_tuples)} rows into reviews"
-                )
+                for value in data_tuples:
+                    try:
+                        cursor.execute(insert_query, value)
+                    except :
+                        logger.error(
+                            f"Failed inserting reviews {value[0]}: {e}"
+                        )
+                        insert_rejects('reviews', value, str(e))
+                logger.info("Finished inserting reviews")
+
     except psycopg2.Error as e:
         print(f"An error occurred while inserting reviews: {e}")
     finally:
@@ -305,10 +339,16 @@ def insert_sessions_data(sessions_cleaned):
                 """
 
                 data_tuples = list(sessions_cleaned.itertuples(index=False, name=None))
-                cursor.executemany(insert_query, data_tuples)
-                logger.info(
-                    f"Inserted {len(data_tuples)} rows into sessions"
-                )
+                for value in data_tuples:
+                    try:
+                        cursor.execute(insert_query, value)
+                    except :
+                        logger.error(
+                            f"Failed inserting sessions {value[0]}: {e}"
+                        )
+                        insert_rejects('sessions', value, str(e))
+                logger.info("Finished inserting sessions")
+                
     except psycopg2.Error as e:
         print(f"An error occurred while inserting sessions: {e}")
     finally:
@@ -332,10 +372,16 @@ def insert_interactions_data(interactions_cleaned):
                 """
 
                 data_tuples = list(interactions_cleaned.itertuples(index=False, name=None))
-                cursor.executemany(insert_query, data_tuples)
-                logger.info(
-                    f"Inserted {len(data_tuples)} rows into interactions"
-                )
+                for value in data_tuples:
+                    try:
+                        cursor.execute(insert_query, value)
+                    except :
+                        logger.error(
+                            f"Failed inserting interactions {value[0]}: {e}"
+                        )
+                        insert_rejects('interactions', value, str(e))
+                logger.info("Finished inserting interactions")
+                
     except psycopg2.Error as e:
         print(f"An error occurred while inserting interactions: {e}")
     finally:

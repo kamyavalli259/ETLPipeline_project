@@ -30,6 +30,7 @@ files = [
 
 def main():
     try:
+        database.init_db()
         logger.info("Starting the E-COMMERCE INGESTION WORKFLOW.")
         #print("--- STARTING E-COMMERCE INGESTION WORKFLOW ---")
         logger.debug("data from .csv")
@@ -92,7 +93,7 @@ def main():
         # After cleaning, you can proceed to load data into the database or perform further analysis
         print("--- CLEANING COMPLETE ---")
 
-        database.init_db()
+        
         # After cleaning, insert data into PostgreSQL using database.py functions
 
         logger.info("Inserting users data into PostgreSQL.")

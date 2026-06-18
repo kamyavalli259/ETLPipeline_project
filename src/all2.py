@@ -7,7 +7,6 @@ DATA_DIR = "../data"
 
 # List all CSV files you want to load
 files = [
-    "products.csv",
     "reviews.csv"
 ]
 
@@ -44,11 +43,7 @@ def main():
             print(f"\nValue counts for {col}:")
             print(df[col].value_counts())
         '''
-        print(df['category'].unique())
-        category_avg = df.groupby('category')['rating_avg'].mean()
-        df = df.merge(category_avg, on='category', suffixes=('', '_category_avg'))
-        df['rating_avg'] = df['rating_avg'].fillna(df['rating_avg_category_avg'])
-        print(category_avg)
+        print(df.isnull().sum())
 
 
         
