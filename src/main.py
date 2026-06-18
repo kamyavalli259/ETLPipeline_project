@@ -10,6 +10,7 @@ from clean import (
 import database
   
 import pandas as pd
+from logger import logger  # Import the logger
 import os 
 
 
@@ -28,93 +29,118 @@ files = [
 
 
 def main():
-    print("--- STARTING E-COMMERCE INGESTION WORKFLOW ---")
-    
-    datasets = read_all_csvs(DATA_DIR, files)
+    try:
+        logger.info("Starting the E-COMMERCE INGESTION WORKFLOW.")
+        #print("--- STARTING E-COMMERCE INGESTION WORKFLOW ---")
+        logger.debug("data from .csv")
+        logger.info("Reading data from CSV files.")
+        datasets = read_all_csvs(DATA_DIR, files)
+
+        logger.info("Cleaning user data.")
+        users_cleaned = clean_users(datasets['users'])
+
+        logger.info("Cleaning product data.")
+        products_cleaned = clean_products(datasets["products"])
+
+        logger.info("Cleaning sessions data.")
+        sessions_cleaned = clean_sessions(datasets["sessions"])
+
+        logger.info("Cleaning interactions data.")
+        interactions_cleaned = clean_interactions(datasets["interactions"])
+
+        logger.info("Cleaning purchases data.")
+        purchases_cleaned = clean_purchases(datasets["purchases"])
+
+        logger.info("Cleaning reviews data.")
+        reviews_cleaned = clean_reviews(datasets["reviews"])
+
+        
+        for name, df in datasets.items():
+            print(f"\nDataset: {name}")
+            print(df.head())
+            print(df.info())
+            print(df.columns)
 
 
-    
-    users_cleaned = clean_users(datasets['users'])
-    products_cleaned = clean_products(datasets["products"])
-    sessions_cleaned = clean_sessions(datasets["sessions"])
-    interactions_cleaned = clean_interactions(datasets["interactions"])
-    purchases_cleaned = clean_purchases(datasets["purchases"])
-    reviews_cleaned = clean_reviews(datasets["reviews"])
+        # Print a summary of each cleaned dataset
+        print("\nCleaned Users Dataset:")
+        print(users_cleaned.head())
+        print(users_cleaned.info())
+        print(users_cleaned.isnull().sum())
+        
+        print("\nCleaned Products Dataset:")
+        print(products_cleaned.head())
+        print(products_cleaned.info())
+        
+        print("\nCleaned Sessions Dataset:")
+        print(sessions_cleaned.head())
+        print(sessions_cleaned.info())
+        
+        print("\nCleaned Interactions Dataset:")
+        print(interactions_cleaned.head())
+        print(interactions_cleaned.info())
+        
+        print("\nCleaned Purchases Dataset:")
+        print(purchases_cleaned.head())
+        print(purchases_cleaned.info())
+        
+        print("\nCleaned Reviews Dataset:")
+        print(reviews_cleaned.head())
+        print(reviews_cleaned.info())
 
-    
-    for name, df in datasets.items():
-        print(f"\nDataset: {name}")
-        print(df.head())
-        print(df.info())
-        print(df.columns)
+        
+        # After cleaning, you can proceed to load data into the database or perform further analysis
+        print("--- CLEANING COMPLETE ---")
 
+        database.init_db()
+        # After cleaning, insert data into PostgreSQL using database.py functions
 
-    # Print a summary of each cleaned dataset
-    print("\nCleaned Users Dataset:")
-    print(users_cleaned.head())
-    print(users_cleaned.info())
-    print(users_cleaned.isnull().sum())
-    
-    print("\nCleaned Products Dataset:")
-    print(products_cleaned.head())
-    print(products_cleaned.info())
-    
-    print("\nCleaned Sessions Dataset:")
-    print(sessions_cleaned.head())
-    print(sessions_cleaned.info())
-    
-    print("\nCleaned Interactions Dataset:")
-    print(interactions_cleaned.head())
-    print(interactions_cleaned.info())
-    
-    print("\nCleaned Purchases Dataset:")
-    print(purchases_cleaned.head())
-    print(purchases_cleaned.info())
-    
-    print("\nCleaned Reviews Dataset:")
-    print(reviews_cleaned.head())
-    print(reviews_cleaned.info())
+        logger.info("Inserting users data into PostgreSQL.")
+        database.insert_users_data(users_cleaned)
 
-    
-    # After cleaning, you can proceed to load data into the database or perform further analysis
-    print("--- CLEANING COMPLETE ---")
+        logger.info("Inserting products data into PostgreSQL.")
+        database.insert_products_data(products_cleaned)
 
-    database.init_db()
-    # After cleaning, insert data into PostgreSQL using database.py functions
-    database.insert_users_data(users_cleaned)
-    database.insert_products_data(products_cleaned)
-    database.insert_sessions_data(sessions_cleaned)
-    database.insert_interactions_data(interactions_cleaned)
-    database.insert_purchases_data(purchases_cleaned)
-    database.insert_reviews_data(reviews_cleaned)
-    
-    print("--- INGESTION COMPLETE ---")
+        logger.info("Inserting sessions data into PostgreSQL.")
+        database.insert_sessions_data(sessions_cleaned)
 
+        logger.info("Inserting interactions data into PostgreSQL.")
+        database.insert_interactions_data(interactions_cleaned)
+
+        logger.info("Inserting purchases data into PostgreSQL.")
+        database.insert_purchases_data(purchases_cleaned)
+
+        logger.info("Inserting reviews data into PostgreSQL.")
+        database.insert_reviews_data(reviews_cleaned)
+        
+        print("--- INGESTION COMPLETE ---")
+
+    except Exception as e:
+        logger.error(f"An error occurred during the ETL pipeline: {e}", exc_info=True)
 
 
+        
+        '''
+        #Apply cleaning functions
+        cleaned_datasets = main_clean(datasets)
+        print('-----Accessing--users-----')
+        print(cleaned_datasets['users'])
+        print(type(cleaned_datasets['users']))
 
-    
-    '''
-    #Apply cleaning functions
-    cleaned_datasets = main_clean(datasets)
-    print('-----Accessing--users-----')
-    print(cleaned_datasets['users'])
-    print(type(cleaned_datasets['users']))
+        # Print a summary of the cleaned data
+        
+        for name, df in cleaned_datasets.items():
+            print(f"\nCleaned Dataset: {name}")
+            print(df.head())
+            print(df.info())
+            for _, row in df.iterrows():
+                print(row['user_id'])
+        '''   
 
-    # Print a summary of the cleaned data
-    
-    for name, df in cleaned_datasets.items():
-        print(f"\nCleaned Dataset: {name}")
-        print(df.head())
-        print(df.info())
-        for _, row in df.iterrows():
-            print(row['user_id'])
-    '''   
+        #load and pass in the information
+        
 
-    #load and pass in the information
-    
-
-    
+        
 
    
     
