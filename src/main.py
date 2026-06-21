@@ -1,5 +1,5 @@
-from readers.csv_reader import read_all_csvs
-from clean import (
+from .readers.csv_reader import read_all_csvs
+from .clean import (
     clean_users,
     clean_products,
     clean_sessions,
@@ -7,15 +7,15 @@ from clean import (
     clean_purchases,
     clean_reviews
 )
-import database
+from . import database
   
 import pandas as pd
-from logger import logger  # Import the logger
+from .logger import logger  # Import the logger
 import os 
 
 
 # Point to the data folder relative to where src/ lives
-DATA_DIR = "../data"
+DATA_DIR = "./data"
 
 # List all CSV files you want to load
 files = [

@@ -1,16 +1,22 @@
 
 import sys
 import os
-import pandas as pd
 
-sys.path.append(
+# Make src folder importable
+sys.path.insert(
+    0,
     os.path.abspath(
-        os.path.join(os.path.dirname(__file__), "..")
+        os.path.join(
+            os.path.dirname(__file__),
+            "../src"
+        )
     )
 )
 
-from src.readers.csv_reader import read_all_csvs
 import pandas as pd
+from src.clean import clean_dataframe
+from src.clean import clean_users
+from src.readers.csv_reader import read_all_csvs
 
 
 

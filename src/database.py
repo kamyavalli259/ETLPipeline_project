@@ -2,10 +2,13 @@ import psycopg2
 import pandas as pd
 from dotenv import load_dotenv
 import os
-from logger import logger
+from .logger import logger
 import json
+from pathlib import Path
 
 def connect():
+    env_path = Path(__file__).resolve().with_name(".env")
+    load_dotenv(env_path)
     load_dotenv()
     conn = psycopg2.connect(
     host=os.getenv('DB_HOST'),
@@ -172,7 +175,7 @@ def insert_rejects(source, payload, reason):
                 data = (source, json.dumps(payload, default=str), reason)
                 
                 cursor.execute(insert_query, data) 
-                print("Rows inserted:", cursor.rowcount)
+                #print("Rows inserted:", cursor.rowcount)
                 
     except psycopg2.Error as e:
         logger.error(f"Database error: {e}")

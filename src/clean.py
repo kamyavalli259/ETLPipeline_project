@@ -1,6 +1,9 @@
 import pandas as pd
-from logger import logger
-from database import insert_rejects
+from .logger import logger
+#import src.logger
+from .database import insert_rejects
+
+
 
 def clean_dataframe(dataframe):
     """
