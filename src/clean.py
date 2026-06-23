@@ -54,6 +54,18 @@ def clean_dataframe(dataframe):
     return cleaned
 
 def clean_users(dataframe):
+    """Clean the users dataset and normalize user-specific fields.
+
+    This function applies generic cleaning via `clean_dataframe`, then converts
+    the `signup_date` column to datetime dtype. It also logs row counts before
+    and after cleaning.
+
+    Parameters:
+        dataframe (pandas.DataFrame): Raw users dataset.
+
+    Returns:
+        pandas.DataFrame: Cleaned users dataset with normalized dates.
+    """
 
     lenght = len(dataframe)
     logger.info(f"USERS: Number of rows before cleaning {lenght}")
@@ -71,6 +83,17 @@ def clean_users(dataframe):
     return users_cleaned
 
 def clean_sessions(dataframe):
+    """Clean the sessions dataset and normalize session timestamps.
+
+    This function applies generic cleaning to the sessions DataFrame and then
+    converts the `start_time` column into a datetime dtype.
+
+    Parameters:
+        dataframe (pandas.DataFrame): Raw sessions dataset.
+
+    Returns:
+        pandas.DataFrame: Cleaned sessions dataset with normalized timestamps.
+    """
     #logger.info("Cleaning sessions DataFrame.")
     sessions_cleaned = clean_dataframe(dataframe)
 
@@ -83,9 +106,17 @@ def clean_sessions(dataframe):
     return sessions_cleaned
 
 def clean_reviews(dataframe):
-    """
-    Total length is 1253
-    purchase_id has 200 null values
+    """Clean the reviews dataset, normalize dates, and reject invalid rows.
+
+    This function applies generic cleaning, converts `review_date` to datetime,
+    and writes any rows with missing `purchase_id` to the staging rejects table.
+    It then drops those invalid rows from the returned dataset.
+
+    Parameters:
+        dataframe (pandas.DataFrame): Raw reviews dataset.
+
+    Returns:
+        pandas.DataFrame: Cleaned reviews dataset without invalid purchase_id rows.
     """
     #logger.info("Cleaning reviews DataFrame.")
     length = len(dataframe)
@@ -105,6 +136,17 @@ def clean_reviews(dataframe):
     return reviews_cleaned
 
 def clean_purchases(dataframe):
+    """Clean the purchases dataset and normalize purchase timestamps.
+
+    This function applies generic cleaning to the purchases DataFrame and then
+    converts `order_date` to datetime dtype.
+
+    Parameters:
+        dataframe (pandas.DataFrame): Raw purchases dataset.
+
+    Returns:
+        pandas.DataFrame: Cleaned purchases dataset with normalized order dates.
+    """
     #logger.info("Cleaning purchases DataFrame.")
     purchases_cleaned = clean_dataframe(dataframe)
     logger.debug('converting order_date to datetime.')
@@ -112,7 +154,19 @@ def clean_purchases(dataframe):
     logger.info(f'Purchases cleaned succesfully. Rows: {len(purchases_cleaned)}')
     return purchases_cleaned
 
+
 def clean_products(dataframe):
+    """Clean the products dataset and normalize product date fields.
+
+    This function applies generic cleaning then converts `date_added` to a
+    datetime dtype.
+
+    Parameters:
+        dataframe (pandas.DataFrame): Raw products dataset.
+
+    Returns:
+        pandas.DataFrame: Cleaned products dataset with normalized addition dates.
+    """
     #logger.info("Cleaning Products DataFrame.")
     products_cleaned = clean_dataframe(dataframe)
     logger.debug('converting date_added to datetime')
@@ -120,7 +174,19 @@ def clean_products(dataframe):
     logger.info(f'Products cleaned succesfully. Rows: {len(products_cleaned)}')
     return products_cleaned
 
+
 def clean_interactions(dataframe):
+    """Clean the interactions dataset and normalize interaction timestamps.
+
+    This function applies generic cleaning and converts the `timestamp` column
+    to datetime dtype.
+
+    Parameters:
+        dataframe (pandas.DataFrame): Raw interactions dataset.
+
+    Returns:
+        pandas.DataFrame: Cleaned interactions dataset with normalized timestamps.
+    """
     #logger.info("Cleaning interactions DataFrame")
     interactions_cleaned = clean_dataframe(dataframe)
     logger.debug("converting timestamp to datetime")

@@ -1,32 +1,4 @@
-'''
 
-import sys
-import os
-import pandas as pd
-
-
-
-
-sys.path.append(
-    os.path.abspath(
-        os.path.join(os.path.dirname(__file__), "..")
-    )
-)
-from src.clean import clean_dataframe
-from src.clean import clean_users
-from src.logger import logger
-
-'''
-'''
-import os
-import sys
-
-#sys.path.append(os.path.abspath(".."))
-
-# importing
-from src.clean import clean_dataframe, clean_users
-import pandas as pd
-'''
 import os
 import sys
 
@@ -37,14 +9,20 @@ import pandas as pd
 from src.clean import clean_dataframe, clean_users
 
 
-
-'''
-to test clean dataframe general cleaner going through removing duplicates, 
-if it is working correctly 
-'''
-
-
 def test_clean_dataframe():
+    """Verify that clean_dataframe normalizes column names, trims whitespace, removes duplicates, and converts empty values to NaN.
+
+    The test constructs a sample DataFrame with:
+    - extra spaces in column names and string values
+    - duplicate rows
+    - an empty string in the Country column
+
+    After calling clean_dataframe(), it asserts that:
+    - column names are normalized to lowercase snake_case
+    - leading/trailing spaces are removed from string values
+    - duplicate rows are dropped
+    - empty values are converted to missing values
+    """
 
     df = pd.DataFrame({
         " User ID ": [1, 1, 2],
