@@ -60,7 +60,21 @@ PORT=5432
 From the repository root:
 
 ```bash
-python src/main.py
+python -m src.main
+
+To run Tkinter
+python -m src.tkinter_app
+
+```
+
+## Running Tests
+
+Execute the test suite with:
+
+```bash
+python -m pytest tests/test_extract.py
+python -m pytest tests/test_load.py
+python -m pytest tests/test_transform.py
 ```
 
 This will:
@@ -69,13 +83,7 @@ This will:
 - clean each dataset
 - insert cleaned records into PostgreSQL
 
-## Running Tests
 
-Execute the test suite with:
-
-```bash
-pytest tests/
-```
 
 ## Notes
 

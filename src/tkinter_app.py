@@ -1,14 +1,3 @@
-"""Graphical ETL database explorer for the PostgreSQL-backed ETL pipeline.
-
-This module provides a Tkinter-based user interface that lets the user:
-- browse tables loaded by the ETL pipeline
-- search by primary key for individual records
-- view a customer summary for a selected user
-
-The app connects to PostgreSQL using the same database connection helper
-used by the ETL pipeline and displays results in a table grid.
-"""
-
 import tkinter as tk
 from tkinter import messagebox, ttk
 from pathlib import Path
@@ -40,13 +29,6 @@ TABLE_CONFIG = {
 
 
 class DatabaseApp(tk.Tk):
-    """Tkinter application for browsing ETL database tables and customer summaries.
-
-    The app provides two main views:
-    - Table Browser: load and inspect rows from configured database tables
-    - Customer 360: look up a user and show profile, purchase, session, and review summaries
-    """
-
     def __init__(self):
         super().__init__()
         self.title("ETL Database Explorer")

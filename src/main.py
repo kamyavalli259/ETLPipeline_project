@@ -55,7 +55,7 @@ def main():
         logger.info("Cleaning reviews data.")
         reviews_cleaned = clean_reviews(datasets["reviews"])
 
-        
+        '''
         for name, df in datasets.items():
             print(f"\nDataset: {name}")
             print(df.head())
@@ -89,7 +89,7 @@ def main():
         print(reviews_cleaned.head())
         print(reviews_cleaned.info())
 
-        
+        '''
         # After cleaning, you can proceed to load data into the database or perform further analysis
         print("--- CLEANING COMPLETE ---")
 

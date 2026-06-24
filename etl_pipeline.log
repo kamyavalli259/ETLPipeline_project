@@ -187,3 +187,137 @@ FileNotFoundError: [Errno 2] No such file or directory: '../data/users.csv'
 2026-06-20 22:15:03,414 - etl_pipeline - INFO - Finished inserting purchases
 2026-06-20 22:15:03,415 - etl_pipeline - INFO - Inserting reviews data into PostgreSQL.
 2026-06-20 22:15:03,480 - etl_pipeline - INFO - Finished inserting reviews
+2026-06-24 00:06:22,193 - etl_pipeline - INFO - Starting the E-COMMERCE INGESTION WORKFLOW.
+2026-06-24 00:06:22,194 - etl_pipeline - DEBUG - data from .csv
+2026-06-24 00:06:22,194 - etl_pipeline - INFO - Reading data from CSV files.
+2026-06-24 00:06:22,430 - etl_pipeline - INFO - Cleaning user data.
+2026-06-24 00:06:22,430 - etl_pipeline - INFO - USERS: Number of rows before cleaning 10000
+2026-06-24 00:06:22,430 - etl_pipeline - INFO - Starting generic dataframe cleaning
+2026-06-24 00:06:22,431 - etl_pipeline - DEBUG - Standardizing column names
+2026-06-24 00:06:22,432 - etl_pipeline - DEBUG - Trimming whitespace from string columns
+2026-06-24 00:06:22,449 - etl_pipeline - INFO - Removed 0 duplicate rows
+2026-06-24 00:06:22,461 - etl_pipeline - INFO - Finished generic dataframe cleaning
+2026-06-24 00:06:22,461 - etl_pipeline - DEBUG - Converting signup_date to datetime
+2026-06-24 00:06:22,465 - etl_pipeline - INFO - Users cleaned successfully. Rows: 10000
+2026-06-24 00:06:22,465 - etl_pipeline - INFO - USERS: Number of rows after cleaning 0
+2026-06-24 00:06:22,465 - etl_pipeline - INFO - Cleaning product data.
+2026-06-24 00:06:22,465 - etl_pipeline - INFO - Starting generic dataframe cleaning
+2026-06-24 00:06:22,465 - etl_pipeline - DEBUG - Standardizing column names
+2026-06-24 00:06:22,466 - etl_pipeline - DEBUG - Trimming whitespace from string columns
+2026-06-24 00:06:22,470 - etl_pipeline - INFO - Removed 0 duplicate rows
+2026-06-24 00:06:22,471 - etl_pipeline - INFO - Finished generic dataframe cleaning
+2026-06-24 00:06:22,471 - etl_pipeline - DEBUG - converting date_added to datetime
+2026-06-24 00:06:22,472 - etl_pipeline - INFO - Products cleaned succesfully. Rows: 1000
+2026-06-24 00:06:22,472 - etl_pipeline - INFO - Cleaning sessions data.
+2026-06-24 00:06:22,472 - etl_pipeline - INFO - Starting generic dataframe cleaning
+2026-06-24 00:06:22,472 - etl_pipeline - DEBUG - Standardizing column names
+2026-06-24 00:06:22,472 - etl_pipeline - DEBUG - Trimming whitespace from string columns
+2026-06-24 00:06:22,490 - etl_pipeline - INFO - Removed 0 duplicate rows
+2026-06-24 00:06:22,504 - etl_pipeline - INFO - Finished generic dataframe cleaning
+2026-06-24 00:06:22,504 - etl_pipeline - DEBUG - Converting start_time to datetime
+2026-06-24 00:06:22,507 - etl_pipeline - INFO - Sessions cleaned successfully. Rows: 19315
+2026-06-24 00:06:22,507 - etl_pipeline - INFO - Cleaning interactions data.
+2026-06-24 00:06:22,508 - etl_pipeline - INFO - Starting generic dataframe cleaning
+2026-06-24 00:06:22,511 - etl_pipeline - DEBUG - Standardizing column names
+2026-06-24 00:06:22,512 - etl_pipeline - DEBUG - Trimming whitespace from string columns
+2026-06-24 00:06:22,616 - etl_pipeline - INFO - Removed 0 duplicate rows
+2026-06-24 00:06:22,712 - etl_pipeline - INFO - Finished generic dataframe cleaning
+2026-06-24 00:06:22,712 - etl_pipeline - DEBUG - converting timestamp to datetime
+2026-06-24 00:06:22,727 - etl_pipeline - INFO - Interactions cleaned succesfully. Rows: 100000
+2026-06-24 00:06:22,727 - etl_pipeline - INFO - Cleaning purchases data.
+2026-06-24 00:06:22,727 - etl_pipeline - INFO - Starting generic dataframe cleaning
+2026-06-24 00:06:22,727 - etl_pipeline - DEBUG - Standardizing column names
+2026-06-24 00:06:22,727 - etl_pipeline - DEBUG - Trimming whitespace from string columns
+2026-06-24 00:06:22,731 - etl_pipeline - INFO - Removed 0 duplicate rows
+2026-06-24 00:06:22,733 - etl_pipeline - INFO - Finished generic dataframe cleaning
+2026-06-24 00:06:22,733 - etl_pipeline - DEBUG - converting order_date to datetime.
+2026-06-24 00:06:22,733 - etl_pipeline - INFO - Purchases cleaned succesfully. Rows: 1737
+2026-06-24 00:06:22,733 - etl_pipeline - INFO - Cleaning reviews data.
+2026-06-24 00:06:22,733 - etl_pipeline - INFO - Reviews: Number of rows before cleaning 1253
+2026-06-24 00:06:22,733 - etl_pipeline - INFO - Starting generic dataframe cleaning
+2026-06-24 00:06:22,733 - etl_pipeline - DEBUG - Standardizing column names
+2026-06-24 00:06:22,734 - etl_pipeline - DEBUG - Trimming whitespace from string columns
+2026-06-24 00:06:22,741 - etl_pipeline - INFO - Removed 0 duplicate rows
+2026-06-24 00:06:22,742 - etl_pipeline - INFO - Finished generic dataframe cleaning
+2026-06-24 00:06:22,742 - etl_pipeline - DEBUG - Converting review_date to datetime.
+2026-06-24 00:06:23,923 - etl_pipeline - INFO - Reviews cleaned succesfully. Rows: 1053
+2026-06-24 00:06:23,924 - etl_pipeline - INFO - Number of rows dropped. Rows: 200
+2026-06-24 00:06:24,025 - etl_pipeline - INFO - Inserting users data into PostgreSQL.
+2026-06-24 00:06:24,612 - etl_pipeline - INFO - Finished inserting users
+2026-06-24 00:06:24,614 - etl_pipeline - INFO - Inserting products data into PostgreSQL.
+2026-06-24 00:06:24,680 - etl_pipeline - INFO - Finished inserting products
+2026-06-24 00:06:24,681 - etl_pipeline - INFO - Inserting sessions data into PostgreSQL.
+2026-06-24 00:06:25,578 - etl_pipeline - INFO - Finished inserting sessions
+2026-06-24 00:06:25,580 - etl_pipeline - INFO - Inserting interactions data into PostgreSQL.
+2026-06-24 00:06:30,631 - etl_pipeline - INFO - Finished inserting interactions
+2026-06-24 00:06:30,639 - etl_pipeline - INFO - Inserting purchases data into PostgreSQL.
+2026-06-24 00:06:30,740 - etl_pipeline - INFO - Finished inserting purchases
+2026-06-24 00:06:30,741 - etl_pipeline - INFO - Inserting reviews data into PostgreSQL.
+2026-06-24 00:06:30,809 - etl_pipeline - INFO - Finished inserting reviews
+2026-06-24 01:03:05,190 - etl_pipeline - INFO - Starting the E-COMMERCE INGESTION WORKFLOW.
+2026-06-24 01:03:05,190 - etl_pipeline - DEBUG - data from .csv
+2026-06-24 01:03:05,190 - etl_pipeline - INFO - Reading data from CSV files.
+2026-06-24 01:03:05,435 - etl_pipeline - INFO - Cleaning user data.
+2026-06-24 01:03:05,436 - etl_pipeline - INFO - USERS: Number of rows before cleaning 10000
+2026-06-24 01:03:05,436 - etl_pipeline - INFO - Starting generic dataframe cleaning
+2026-06-24 01:03:05,436 - etl_pipeline - DEBUG - Standardizing column names
+2026-06-24 01:03:05,437 - etl_pipeline - DEBUG - Trimming whitespace from string columns
+2026-06-24 01:03:05,453 - etl_pipeline - INFO - Removed 0 duplicate rows
+2026-06-24 01:03:05,465 - etl_pipeline - INFO - Finished generic dataframe cleaning
+2026-06-24 01:03:05,465 - etl_pipeline - DEBUG - Converting signup_date to datetime
+2026-06-24 01:03:05,469 - etl_pipeline - INFO - Users cleaned successfully. Rows: 10000
+2026-06-24 01:03:05,469 - etl_pipeline - INFO - USERS: Number of rows after cleaning 0
+2026-06-24 01:03:05,469 - etl_pipeline - INFO - Cleaning product data.
+2026-06-24 01:03:05,469 - etl_pipeline - INFO - Starting generic dataframe cleaning
+2026-06-24 01:03:05,469 - etl_pipeline - DEBUG - Standardizing column names
+2026-06-24 01:03:05,470 - etl_pipeline - DEBUG - Trimming whitespace from string columns
+2026-06-24 01:03:05,474 - etl_pipeline - INFO - Removed 0 duplicate rows
+2026-06-24 01:03:05,475 - etl_pipeline - INFO - Finished generic dataframe cleaning
+2026-06-24 01:03:05,475 - etl_pipeline - DEBUG - converting date_added to datetime
+2026-06-24 01:03:05,476 - etl_pipeline - INFO - Products cleaned succesfully. Rows: 1000
+2026-06-24 01:03:05,476 - etl_pipeline - INFO - Cleaning sessions data.
+2026-06-24 01:03:05,476 - etl_pipeline - INFO - Starting generic dataframe cleaning
+2026-06-24 01:03:05,476 - etl_pipeline - DEBUG - Standardizing column names
+2026-06-24 01:03:05,477 - etl_pipeline - DEBUG - Trimming whitespace from string columns
+2026-06-24 01:03:05,494 - etl_pipeline - INFO - Removed 0 duplicate rows
+2026-06-24 01:03:05,508 - etl_pipeline - INFO - Finished generic dataframe cleaning
+2026-06-24 01:03:05,508 - etl_pipeline - DEBUG - Converting start_time to datetime
+2026-06-24 01:03:05,512 - etl_pipeline - INFO - Sessions cleaned successfully. Rows: 19315
+2026-06-24 01:03:05,513 - etl_pipeline - INFO - Cleaning interactions data.
+2026-06-24 01:03:05,513 - etl_pipeline - INFO - Starting generic dataframe cleaning
+2026-06-24 01:03:05,517 - etl_pipeline - DEBUG - Standardizing column names
+2026-06-24 01:03:05,517 - etl_pipeline - DEBUG - Trimming whitespace from string columns
+2026-06-24 01:03:05,620 - etl_pipeline - INFO - Removed 0 duplicate rows
+2026-06-24 01:03:05,717 - etl_pipeline - INFO - Finished generic dataframe cleaning
+2026-06-24 01:03:05,717 - etl_pipeline - DEBUG - converting timestamp to datetime
+2026-06-24 01:03:05,732 - etl_pipeline - INFO - Interactions cleaned succesfully. Rows: 100000
+2026-06-24 01:03:05,732 - etl_pipeline - INFO - Cleaning purchases data.
+2026-06-24 01:03:05,732 - etl_pipeline - INFO - Starting generic dataframe cleaning
+2026-06-24 01:03:05,732 - etl_pipeline - DEBUG - Standardizing column names
+2026-06-24 01:03:05,732 - etl_pipeline - DEBUG - Trimming whitespace from string columns
+2026-06-24 01:03:05,736 - etl_pipeline - INFO - Removed 0 duplicate rows
+2026-06-24 01:03:05,737 - etl_pipeline - INFO - Finished generic dataframe cleaning
+2026-06-24 01:03:05,737 - etl_pipeline - DEBUG - converting order_date to datetime.
+2026-06-24 01:03:05,738 - etl_pipeline - INFO - Purchases cleaned succesfully. Rows: 1737
+2026-06-24 01:03:05,738 - etl_pipeline - INFO - Cleaning reviews data.
+2026-06-24 01:03:05,738 - etl_pipeline - INFO - Reviews: Number of rows before cleaning 1253
+2026-06-24 01:03:05,738 - etl_pipeline - INFO - Starting generic dataframe cleaning
+2026-06-24 01:03:05,738 - etl_pipeline - DEBUG - Standardizing column names
+2026-06-24 01:03:05,739 - etl_pipeline - DEBUG - Trimming whitespace from string columns
+2026-06-24 01:03:05,746 - etl_pipeline - INFO - Removed 0 duplicate rows
+2026-06-24 01:03:05,748 - etl_pipeline - INFO - Finished generic dataframe cleaning
+2026-06-24 01:03:05,748 - etl_pipeline - DEBUG - Converting review_date to datetime.
+2026-06-24 01:03:06,830 - etl_pipeline - INFO - Reviews cleaned succesfully. Rows: 1053
+2026-06-24 01:03:06,830 - etl_pipeline - INFO - Number of rows dropped. Rows: 200
+2026-06-24 01:03:06,830 - etl_pipeline - INFO - Inserting users data into PostgreSQL.
+2026-06-24 01:03:07,412 - etl_pipeline - INFO - Finished inserting users
+2026-06-24 01:03:07,413 - etl_pipeline - INFO - Inserting products data into PostgreSQL.
+2026-06-24 01:03:07,483 - etl_pipeline - INFO - Finished inserting products
+2026-06-24 01:03:07,484 - etl_pipeline - INFO - Inserting sessions data into PostgreSQL.
+2026-06-24 01:03:08,399 - etl_pipeline - INFO - Finished inserting sessions
+2026-06-24 01:03:08,401 - etl_pipeline - INFO - Inserting interactions data into PostgreSQL.
+2026-06-24 01:03:13,611 - etl_pipeline - INFO - Finished inserting interactions
+2026-06-24 01:03:13,619 - etl_pipeline - INFO - Inserting purchases data into PostgreSQL.
+2026-06-24 01:03:13,719 - etl_pipeline - INFO - Finished inserting purchases
+2026-06-24 01:03:13,720 - etl_pipeline - INFO - Inserting reviews data into PostgreSQL.
+2026-06-24 01:03:13,792 - etl_pipeline - INFO - Finished inserting reviews

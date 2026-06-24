@@ -7,14 +7,6 @@ import json
 from pathlib import Path
 
 def connect():
-    """Create a PostgreSQL database connection using environment variables.
-
-    The function loads environment variables from a `.env` file located next to
-    `database.py`, then connects using `psycopg2.connect()`.
-
-    Returns:
-        psycopg2.extensions.connection: An open PostgreSQL connection.
-    """
     env_path = Path(__file__).resolve().with_name(".env")
     load_dotenv(env_path)
     load_dotenv()
@@ -28,12 +20,6 @@ def connect():
     return conn
 
 def init_db():
-    """Initialize the PostgreSQL database schema for the ETL pipeline.
-
-    This function connects to the database, drops any existing pipeline tables,
-    and recreates the required tables for users, products, purchases, reviews,
-    sessions, interactions, and staging rejects.
-    """
     conn = connect()
     try:
         '''
@@ -170,13 +156,6 @@ def init_db():
         conn.close() 
 
 def insert_rejects(source, payload, reason):
-    """Insert a rejected row into the staging rejects table.
-
-    Parameters:
-        source (str): Name of the source dataset where the rejection occurred.
-        payload (tuple): The row values being rejected.
-        reason (str): The reason for the rejection.
-    """
     conn = connect()
     try: 
         with conn:
@@ -205,13 +184,6 @@ def insert_rejects(source, payload, reason):
 
      
 def insert_users_data(users_cleaned):
-    """Insert cleaned user records into the users table.
-
-    Rows that fail insertion are logged and written to `stg_rejects`.
-
-    Parameters:
-        users_cleaned (pandas.DataFrame): Cleaned users dataset.
-    """
     #logger.info("Inserting users data into the database.")
     conn = connect()
 
@@ -254,13 +226,6 @@ def insert_users_data(users_cleaned):
         conn.close()
 
 def insert_products_data(products_cleaned):
-    """Insert cleaned product records into the products table.
-
-    Rows that fail insertion are logged and written to `stg_rejects`.
-
-    Parameters:
-        products_cleaned (pandas.DataFrame): Cleaned products dataset.
-    """
     #logger.info("Inserting products data into databadse")
     conn = connect()
 
@@ -295,13 +260,6 @@ def insert_products_data(products_cleaned):
 
 
 def insert_purchases_data(purchases_cleaned):
-    """Insert cleaned purchase records into the purchases table.
-
-    Rows that fail insertion are logged and written to `stg_rejects`.
-
-    Parameters:
-        purchases_cleaned (pandas.DataFrame): Cleaned purchases dataset.
-    """
     #logger.info("Inserting purchases data into database")
     conn = connect()
 
@@ -335,13 +293,6 @@ def insert_purchases_data(purchases_cleaned):
 
 
 def insert_reviews_data(reviews_cleaned):
-    """Insert cleaned review records into the reviews table.
-
-    Rows that fail insertion are logged and written to `stg_rejects`.
-
-    Parameters:
-        reviews_cleaned (pandas.DataFrame): Cleaned reviews dataset.
-    """
     #logger.info("Inserting reviews data into database")
     conn = connect()
 
@@ -375,13 +326,6 @@ def insert_reviews_data(reviews_cleaned):
 
 
 def insert_sessions_data(sessions_cleaned):
-    """Insert cleaned session records into the sessions table.
-
-    Rows that fail insertion are logged and written to `stg_rejects`.
-
-    Parameters:
-        sessions_cleaned (pandas.DataFrame): Cleaned sessions dataset.
-    """
     #logger.info('Inserting sessions into the database')
     conn = connect()
 
@@ -415,13 +359,6 @@ def insert_sessions_data(sessions_cleaned):
 
 
 def insert_interactions_data(interactions_cleaned):
-    """Insert cleaned interaction records into the interactions table.
-
-    Rows that fail insertion are logged and written to `stg_rejects`.
-
-    Parameters:
-        interactions_cleaned (pandas.DataFrame): Cleaned interactions dataset.
-    """
     #logger.info('Inserting interactions data into the database')
     conn = connect()
 
